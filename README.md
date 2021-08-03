@@ -25,7 +25,7 @@ the command line should now show
 2. – go into the data folder that has been mounted using:
 >root@94c6dc7c063c:/app# cd data
 
-3. – run the following command where 20002 is the name of the folder with the nii.gz files for the particular subject
+3. – run the following command where, for instance, 20002 is the name of the folder with the nii.gz files for the particular subject
 >root@94c6dc7c063c:/app/data# bash srr_process_full.sh 20002
 
 full folder path may also be entered, both ways work
