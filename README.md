@@ -38,6 +38,7 @@ All the intermediate files and the final output will be inside the 20002 folder 
 ## **Trouble Shooting**
 
 Incase the script does not run from within the docker it may need to be converted into a format with line endings suitable for Unix
+
 The dos2unix command can be used
 
 https://linux.die.net/man/1/dos2unix
