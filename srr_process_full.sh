@@ -80,8 +80,10 @@ while read line;
 #add the output directory to reconstruction_pipeline_command.txt
 echo '  --dir-output '$DIR/$NAME/'srroutput  ' >> $DIR/$NAME/reconstruction_pipeline_command.txt
 
+#runs segment_brains_command.txt created previously as a bash command
 bash $DIR/$NAME/segment_brains_command.txt
 
 #[potentially add a break / exit in case of an error]
 
+#runs reconstruction_pipeline_command.txt created previously as a bash command
 bash $DIR/$NAME/reconstruction_pipeline_command.txt
