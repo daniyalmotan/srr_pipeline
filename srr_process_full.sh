@@ -4,11 +4,11 @@
  #Instructions for use available at <<https://github.com/daniyalmotan/srr_pipeline>>
  #Script developed by: Daniyal Motan, UCLH, 2021.  Adapted from initial script by Magdalena Sokolska, UCLH
 
- #Version = 0.1
+ #Version = 0.2
 
  #function clalled to display how to use script incase no argument supplied
  usage(){
-	echo "Usage: $0 'enter path to folder with unprocessed nifty files'"
+	echo "Usage: $0 'enter full path to folder with unprocessed nifty files (including docker mount path)'"
 	exit 1
 }
 
@@ -44,7 +44,7 @@ while read line;
 		echo -n 'niftymic_segment_fetal_brains  --filenames  ' 
 		fi;
     file=` basename "$line"`;
-	echo -n "./$NAME/$file " ;
+	echo -n "$DIR/$NAME/$file " ;
 	done < $DIR/$NAME/image_list.txt  >  $DIR/$NAME/segment_brains_command.txt
 
 #populate segment_brains_command with masks list in the required format (to later run as a command within the docker) 
@@ -56,7 +56,7 @@ while read line;
 		echo -n '  --filenames-masks  ' 
 		fi;
     file=` basename "$line"`;
-	echo -n  "./$NAME/masks/$file " ;
+	echo -n  "$DIR/$NAME/masks/$file " ;
 	done < $DIR/$NAME/image_list.txt  >>  $DIR/$NAME/segment_brains_command.txt
 
 #read image names from image_list.txt and populate reconstruction_pipeline_command.txt in the required format (to later run as a command within the docker)
@@ -68,7 +68,7 @@ while read line;
 		echo -n 'niftymic_run_reconstruction_pipeline  --filenames  ' 
 		fi;
     file=` basename "$line"`;
-	echo -n "./$NAME/$file " ;
+	echo -n "$DIR/$NAME/$file " ;
 	done < $DIR/$NAME/image_list.txt  >  $DIR/$NAME/reconstruction_pipeline_command.txt
   
 #populate sreconstruction_pipeline_command.txt with masks list in the required format (to later run as a command within the docker) 
@@ -80,7 +80,7 @@ while read line;
 		echo -n '  --filenames-masks  ' 
 		fi;
     file=` basename "$line"`;
-	echo -n  "./$NAME/masks/$file " ;
+	echo -n  "$DIR/$NAME/masks/$file " ;
 	done < $DIR/$NAME/image_list.txt  >>  $DIR/$NAME/reconstruction_pipeline_command.txt
 
 #add the output directory to reconstruction_pipeline_command.txt
