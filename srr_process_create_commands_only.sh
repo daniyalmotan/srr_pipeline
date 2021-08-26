@@ -1,5 +1,11 @@
  #!/bin/bash
 
+ #This script automates the Super Resolution Reconstruction (SRR) Process for Fetal Brains. It is intended to be used with the renbem/niftymic docker <<https://hub.docker.com/r/renbem/niftymic>>
+ #Instructions for use available at <<https://github.com/daniyalmotan/srr_pipeline>>
+ #Script developed by: Daniyal Motan, UCLH, 2021.  Adapted from initial script by Magdalena Sokolska, UCLH
+
+ #Version = 0.1
+
  #function clalled to display how to use script incase no argument supplied
  usage(){
 	echo "Usage: $0 'enter path to folder with unprocessed nifty files'"
@@ -65,7 +71,7 @@ while read line;
 	echo -n "./$NAME/$file " ;
 	done < $DIR/$NAME/image_list.txt  >  $DIR/$NAME/reconstruction_pipeline_command.txt
   
-#populate sreconstruction_pipeline_command.txt with masks list in the required format (to later run as a command within the docker) 
+#populate reconstruction_pipeline_command.txt with masks list in the required format (to later run as a command within the docker) 
 n=0 ;  
 while read line; 
 	do n=$(($n+1)); 
