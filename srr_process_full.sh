@@ -4,7 +4,7 @@
  #Instructions for use available at <<https://github.com/daniyalmotan/srr_pipeline>>
  #Script developed by: Daniyal Motan, UCLH, 2021.  Adapted from initial script by Magdalena Sokolska, UCLH
 
- #Version = 0.2
+ #Version = 0.3
 
  #function clalled to display how to use script incase no argument supplied
  usage(){
