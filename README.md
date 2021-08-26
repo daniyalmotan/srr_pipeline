@@ -1,7 +1,10 @@
 # srr_pipeline
-Scripts to automate the SRR Process for Fetal Brains
 
-*Intended for use with NiftyMIC running as a docker*
+This script automates the Super Resolution Reconstruction (SRR) Process for Fetal Brains. *It is intended to be used with the renbem/niftymic docker* 
+
+See the following links for the niftymic docker and source files:
+
+https://hub.docker.com/r/renbem/niftymic
 
 https://github.com/gift-surg/NiftyMIC
 
@@ -25,14 +28,11 @@ the command line should now show
 2. – go into the data folder that has been mounted using:
 >root@94c6dc7c063c:/app# cd data
 
-3. – run the following command where, for instance, 20002 is the name of the folder with the .nii.gz files for the particular subject
->root@94c6dc7c063c:/app/data# bash srr_process_full.sh 20002
+3. – run the following command where, for instance, /app/data/20002/NIFTI is the full path (including docker mount path) of the folder with the unprocessed .nii.gz files for the particular subject
+>root@94c6dc7c063c:/app/data# bash srr_process_full.sh /app/data/20002/NIFTI
 
-full folder path may also be entered, both ways work
 
->root@94c6dc7c063c:/app/data# bash srr_process_full.sh /app/data/20002
-
-All the intermediate files and the final output will be inside the 20002 folder once the whole process has been run
+All the intermediate files and the final output will be inside the /app/data/20002/NIFTI folder (C:\srrdata\20002\NIFTI on the host PC) once the whole process has been run
 
 
 ## **Trouble Shooting**
