@@ -8,7 +8,7 @@
 
  #function clalled to display how to use script incase no argument supplied
  usage(){
-	echo "Usage: $0 'enter full path to folder with unprocessed nifty files (including docker mount path)'"
+	echo "Usage: bash $0 'enter full path to folder with unprocessed nifty files (including docker mount path)'"
 	exit 1
 }
 
@@ -23,14 +23,25 @@
 
 #Identifies the Current Folder and Directory and stores as variables
 NAME=`basename "$1"`
-echo $NAME
+echo "The folder you have chosen to process is:" $NAME
 
 DIR=$(dirname "$1")
-echo $DIR
+echo "The directory this folder is in is:" $DIR
 
-#create a masks folder
-mkdir $DIR/$NAME/masks
-echo  $DIR/$NAME/masks created
+#creates a masks folder, checks if the folder already exists
+#also checks if the input folder specified is valid, inacse invalid - process exits gracefully
+if mkdir $DIR/$NAME/masks ; then
+	echo  $DIR/$NAME/masks created
+else
+	if [ -d "$DIR/$NAME/masks" ] ; then
+		echo could not create a masks folder as $DIR/$NAME/masks already exists
+		echo proceeding to next steps...
+	else
+		echo folder you have specified is invalid, exiting...
+		echo 'make sure you enter the full path to folder with unprocessed nifty files (including docker mount path)'
+		exit 1
+	fi
+fi
 
 #list all the nifti images in the specified folder (i.e. files with the .nii.gz extension)
 ls $DIR/$NAME/*nii.gz > $DIR/$NAME/image_list.txt
@@ -71,7 +82,7 @@ while read line;
 	echo -n "$DIR/$NAME/$file " ;
 	done < $DIR/$NAME/image_list.txt  >  $DIR/$NAME/reconstruction_pipeline_command.txt
   
-#populate sreconstruction_pipeline_command.txt with masks list in the required format (to later run as a command within the docker) 
+#populate reconstruction_pipeline_command.txt with masks list in the required format (to later run as a command within the docker) 
 n=0 ;  
 while read line; 
 	do n=$(($n+1)); 
@@ -87,9 +98,19 @@ while read line;
 echo '  --dir-output '$DIR/$NAME/'srroutput  ' >> $DIR/$NAME/reconstruction_pipeline_command.txt
 
 #runs segment_brains_command.txt created previously as a bash command
+echo initiating brain segmentation...
 #bash $DIR/$NAME/segment_brains_command.txt
 
 #[potentially add a break / exit in case of an error]
 
 #runs reconstruction_pipeline_command.txt created previously as a bash command
+echo initiating reconstrction process...
 #bash $DIR/$NAME/reconstruction_pipeline_command.txt
+
+#simply checks for existence of the final reconstructed output 
+#i.e. the srr_template.nii.gz file to say if the reconstruction process was successful or not
+if [ -f "$DIR/$NAME/srroutput/recon_template_space/srr_template.nii.gz" ] ; then
+		echo the reconstruction process was successful
+	else
+		echo the reconstruction may not have been successful, please check the $DIR/$NAME/srroutput folder
+	fi
