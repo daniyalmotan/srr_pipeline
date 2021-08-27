@@ -18,7 +18,9 @@ https://github.com/gift-surg/NiftyMIC
 
 ## **Steps:**
 
-1. – from the command line start docker using:
+1. – from the command line start a docker container using the following command. 
+   
+   *Specify the main directory on the host PC you want to mount as the source instead of C:\srrdata in the command below:*
 >docker run -it --rm --mount type=bind,source=C:\srrdata,target=/app/data renbem/niftymic /bin/bash
 
 the command line should now show
