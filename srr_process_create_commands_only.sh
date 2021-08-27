@@ -4,7 +4,7 @@
  #Instructions for use available at <<https://github.com/daniyalmotan/srr_pipeline>>
  #Script developed by: Daniyal Motan, UCLH, 2021.  Adapted from initial script by Magdalena Sokolska, UCLH
 
- #Version = 0.3
+ #Version = 0.4
 
  #function clalled to display how to use script incase no argument supplied
  usage(){
@@ -43,8 +43,10 @@ else
 	fi
 fi
 
-#list all the nifti images in the specified folder (i.e. files with the .nii.gz extension)
-ls $DIR/$NAME/*nii.gz > $DIR/$NAME/image_list.txt
+# Check for nifti files (i.e. files with the .nii.gz extension), if no nifti files found, exit gracefully
+# if nifti files exist, list all the nifti images in the specified file
+ls $DIR/$NAME/*.nii.gz  >/dev/null || { echo "no NIFTI (*.nii.gz) files found, exiting..." ; exit 1 ; }
+	ls $DIR/$NAME/*.nii.gz > $DIR/$NAME/image_list.txt
 
 #read image names from image_list.txt and populate segment_brains_command in the required format (to later run as a command within the docker)
 n=0 ;  
